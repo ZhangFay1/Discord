@@ -31,10 +31,10 @@ async def on_message(message):
   # if message is sent by the bots or me , ignore
   if message.author == client.user or str(message.author.id) == '399208016861331466'or str(message.author.id) == '855724856259248139':
     return
-    
+
   # event priority
   # 1. if msg contains best, prints @Zhang is the best
-  # 2. if msg contains jesus triggers, send jesus facts
+  # 2. if msg contains keywords from god, send jesus facts
   # 3. send inspiration shit
   if "best" in message.content:
     user = '<@399208016861331466>'
