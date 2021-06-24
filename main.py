@@ -11,7 +11,7 @@ my_secret = os.environ['token']
 client = discord.Client()
 
 #keywords to trigger jesus quotes
-god = ["omg","OMG",'god',"God","hey","la","9","annoying","faster","play","onz","tonight","when","holy"]
+god = ["omg","OMG",'god',"God","hey","la","9","annoying","faster","play","onz","tonight","when","holy","mom"]
 
 #get inspirational quotes from API
 def get_quote():
@@ -19,6 +19,12 @@ def get_quote():
   json_data = json.loads(response.text)
   quote = "'"+json_data[0]['q']+"'" + " -" + json_data[0]['a']
   return(quote)
+
+def get_mama():
+  response = requests.get("https://api.yomomma.info")
+  json_data = json.loads(response.text)
+  quote = json_data['joke']
+  return quote
 
 # Function that runs at startup to indicate running
 @client.event
@@ -31,6 +37,9 @@ async def on_message(message):
   # if message is sent by the bots or me , ignore
   if message.author == client.user or str(message.author.id) == '399208016861331466'or str(message.author.id) == '855724856259248139':
     return
+  # uncomment for me to test
+  # if message.author == client.user or str(message.author.id) == '855724856259248139':
+  #   return
 
   # event priority
   # 1. if msg contains best, prints @Zhang is the best
@@ -40,8 +49,9 @@ async def on_message(message):
     user = '<@399208016861331466>'
     await message.channel.send('%s is the best ' % user)
   elif any(word in message.content for word in god):
-      n = random.randrange(len(jesus))
-      await message.channel.send(message.author.mention + jesus[n])
+      # n = random.randrange(len(jesus))
+      # await message.channel.send(message.author.mention + jesus[n])
+      await message.channel.send(message.author.mention + get_mama())
   else:
       await message.channel.send(message.author.mention + get_quote())
 
