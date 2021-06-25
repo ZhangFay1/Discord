@@ -1,27 +1,12 @@
-
 import os
 import discord
-import requests
-import json
+from sendMama import get_mama
 from keep_alive import keep_alive
-from trigger_words import words #keywords for event trigger
 
 my_secret = os.environ['token']
 client = discord.Client()
-
-#get inspirational quotes from API
-def get_quote():
-  response = requests.get("https://zenquotes.io/api/random")
-  json_data = json.loads(response.text)
-  quote = "'"+json_data[0]['q']+"'" + " -" + json_data[0]['a']
-  return(quote)
-
-#get your mama jokes from API
-def get_mama():
-  response = requests.get("https://api.yomomma.info")
-  json_data = json.loads(response.text)
-  quote = json_data['joke']
-  return quote
+zhang_id = '399208016861331466'
+groovy_id = '234395307759108106'
 
 # Function that runs at startup to indicate running
 @client.event
@@ -32,36 +17,22 @@ async def on_ready():
 @client.event
 async def on_message(message):
   # if message is sent by the bots or me , ignore
-  if message.author == client.user or str(message.author.id) == '399208016861331466'or str(message.author.id) == '855724856259248139':
+  if message.author == client.user or str(message.author.id) == zhang_id or str(message.author.id) == groovy_id:
     return
 
-  # event priority
-  # 1. if msg contains best, prints @Zhang is the best
-  # 2. if msg contains keywords from god, send jesus facts
-  # 3. send inspiration shit
   if "best" in message.content:
-    user = '<@399208016861331466>'
+    user = '<@'+zhang_id+'>'
     await message.channel.send('%s is the best ' % user)
-  elif any(word in message.content for word in words):
-      await message.channel.send(message.author.mention + get_mama())
   else:
-      await message.channel.send(message.author.mention + get_quote())
+      await message.channel.send(message.author.mention + get_mama())
 
 keep_alive()
 client.run(my_secret)
-
-
-# commented code that can be used
 
  # code which allows me to test program
   # if message.author == client.user or str(message.author.id) == '855724856259248139':
   #   return
 
-# code to access jesus quotes if needed
-# import random
-# from jesusWords import jesus
-# n = random.randrange(len(jesus))
-# await message.channel.send(message.author.mention + jesus[n])
 
 
 

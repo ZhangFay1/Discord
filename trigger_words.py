@@ -1,1 +1,0 @@
-words= ["omg","OMG",'god',"God","hey","la","9","annoying","faster","play","onz","tonight","when","holy","mom","wtf"]
